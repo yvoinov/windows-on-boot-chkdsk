@@ -4,8 +4,6 @@ setlocal enableextensions enabledelayedexpansion
 rem === Log directory and file ===
 set "LOGDIR=%SystemRoot%\Logs"
 set "LOGFILE=%LOGDIR%\chkdsk_summary.log"
-if not exist "%LOGDIR%" mkdir "%LOGDIR%"
-if exist "%LOGFILE%" del "%LOGFILE%"
 
 rem === Discover existing fixed drives with letters ===
 set "DRIVES="
@@ -19,7 +17,7 @@ for /f "skip=1 tokens=1" %%A in ('wmic logicaldisk where "DriveType=3" get Devic
 rem Remove leading spaces
 for /f "tokens=* delims= " %%X in ("!DRIVES!") do set "DRIVES=%%X"
 
-echo === CHKDSK pre-check started at %date% %time% === >> "%LOGFILE%"
+echo === CHKDSK pre-check started at %date% %time% === > "%LOGFILE%"
 
 set "NEEDREBOOT=0"
 set "BADDRIVES="
